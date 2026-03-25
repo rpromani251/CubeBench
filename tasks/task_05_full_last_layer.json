@@ -1,0 +1,24 @@
+{
+  "id": "task_05_full_last_layer",
+  "difficulty": "hard",
+  "description": "The first two layers are completely solved. The last layer needs both orientation and permutation. On the U face, the yellow stickers form an incomplete pattern: center is yellow, the UF, UB, and UL edges show yellow on top but UR has yellow facing the right side. The UFR corner has yellow facing front, and UBR has yellow facing back. First orient all last-layer pieces (OLL) so the entire top face is yellow, then permute them (PLL) to solve the cube completely.",
+  "initial_state": [
+    "G","G","W","W","W","W","G","O","W",
+    "B","B","B","R","R","R","R","R","R",
+    "W","W","R","G","G","G","G","G","G",
+    "Y","Y","Y","Y","Y","Y","Y","Y","Y",
+    "O","R","R","O","O","O","O","O","O",
+    "O","W","W","B","B","B","B","B","B"
+  ],
+  "goal_state": [
+    "W","W","W","W","W","W","W","W","W",
+    "R","R","R","R","R","R","R","R","R",
+    "G","G","G","G","G","G","G","G","G",
+    "Y","Y","Y","Y","Y","Y","Y","Y","Y",
+    "O","O","O","O","O","O","O","O","O",
+    "B","B","B","B","B","B","B","B","B"
+  ],
+  "oracle_solution": "R U R' U' R' F R F' R U R' U' R' F R2 U' R' U' R U R' F'",
+  "cfop_stage": "OLL+PLL",
+  "notes": "Combined OLL+PLL. Model must recognize both cases and chain them."
+}

@@ -1,0 +1,24 @@
+{
+  "id": "task_03_pll_t_perm",
+  "difficulty": "hard",
+  "description": "The entire cube is solved except for the top layer permutation. The top face is entirely yellow. Looking at the top layer sides: the front has the pattern [green, red, green] (the center headlight matches but the middle edge is swapped). The right side has [blue, green, blue] \u2014 again headlights with a swapped center edge. This is a T-permutation case. Execute the correct PLL algorithm to finish the solve.",
+  "initial_state": [
+    "W","W","W","W","W","W","W","W","W",
+    "B","O","G","R","R","R","R","R","R",
+    "G","G","R","G","G","G","G","G","G",
+    "Y","Y","Y","Y","Y","Y","Y","Y","Y",
+    "O","R","O","O","O","O","O","O","O",
+    "R","B","B","B","B","B","B","B","B"
+  ],
+  "goal_state": [
+    "W","W","W","W","W","W","W","W","W",
+    "R","R","R","R","R","R","R","R","R",
+    "G","G","G","G","G","G","G","G","G",
+    "Y","Y","Y","Y","Y","Y","Y","Y","Y",
+    "O","O","O","O","O","O","O","O","O",
+    "B","B","B","B","B","B","B","B","B"
+  ],
+  "oracle_solution": "R U R' U' R' F R2 U' R' U' R U R' F'",
+  "cfop_stage": "PLL",
+  "notes": "T-perm PLL case. Two adjacent edge-corner swaps."
+}

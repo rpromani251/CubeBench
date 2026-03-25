@@ -1,0 +1,22 @@
+version = "1.0"
+source = "original"
+
+[metadata]
+author_name = "Rishi Promani"
+author_email = ""
+difficulty_explanation = "Requires reconstructing 3D cube state from natural language cubing terminology (CFOP substeps), then generating a valid move sequence. Tests spatial state tracking and domain-specific reasoning."
+category = "spatial-reasoning"
+tags = ["rubiks-cube", "spatial-reasoning", "state-tracking", "CFOP", "planning"]
+
+[agent]
+timeout_sec = 120.0
+
+[verifier]
+timeout_sec = 30.0
+
+[environment]
+build_timeout_sec = 300.0
+cpus = 1
+memory_mb = 2048
+storage_mb = 4096
+allow_internet = false

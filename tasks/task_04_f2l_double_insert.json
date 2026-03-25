@@ -1,0 +1,24 @@
+{
+  "id": "task_04_f2l_double_insert",
+  "difficulty": "hard",
+  "description": "The white cross is solved on the bottom. Two F2L pairs are solved: back-left (orange-blue) and back-right (red-blue) slots are complete. Two pairs remain unsolved. On the top layer: the white-red-green corner is at UFR with white facing right, and the red-green edge is at UF with green facing up. The white-orange-green corner is at UFL with white facing left, and the orange-green edge is at UB with green facing up. Insert both remaining F2L pairs into their correct slots (front-right and front-left) without disturbing the solved back pairs. Insert the front-right pair first, then the front-left pair.",
+  "initial_state": [
+    "W","W","G","O","W","W","R","R","B",
+    "R","R","W","O","R","R","R","R","R",
+    "G","G","W","W","G","W","G","G","G",
+    "Y","Y","Y","Y","Y","Y","Y","Y","Y",
+    "O","G","W","O","O","B","O","O","O",
+    "O","G","B","B","B","B","B","B","B"
+  ],
+  "goal_state": [
+    "W","W","W","W","W","W","W","W","W",
+    "R","R","R","R","R","R","R","R","R",
+    "G","G","G","G","G","G","G","G","G",
+    "Y","Y","Y","Y","Y","Y","Y","Y","Y",
+    "O","O","O","O","O","O","O","O","O",
+    "B","B","B","B","B","B","B","B","B"
+  ],
+  "oracle_solution": "U R U' R' U' F' U F U' L' U L U F U' F'",
+  "cfop_stage": "F2L",
+  "notes": "Double F2L insert. Must sequence two inserts with preservation constraint."
+}

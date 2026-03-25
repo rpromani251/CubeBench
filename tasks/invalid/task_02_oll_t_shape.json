@@ -1,0 +1,24 @@
+{
+  "id": "task_02_oll_t_shape",
+  "difficulty": "invalid",
+  "description": "The first two layers are completely solved. On the top face (U), you see a 'T' shape of yellow: the center is yellow, the UF and UB edges are yellow on top, and the UL edge is yellow on top, forming a T pointing left. The UR edge has yellow facing the right side. The UFR and UBR corners have yellow facing the front and back respectively, not on top. Apply the correct OLL algorithm to orient all top-face stickers yellow.",
+  "initial_state": [
+    "G","G","W","W","W","W","R","R","W",
+    "R","B","B","R","R","R","R","R","R",
+    "W","W","G","G","G","G","G","G","G",
+    "Y","Y","Y","Y","Y","Y","Y","Y","Y",
+    "O","O","B","O","O","O","O","O","O",
+    "O","W","W","B","B","B","B","B","B"
+  ],
+  "goal_state": [
+    "W","W","W","W","W","W","W","W","W",
+    "R","R","R","R","R","R","R","R","R",
+    "G","G","G","G","G","G","G","G","G",
+    "Y","Y","Y","Y","Y","Y","Y","Y","Y",
+    "O","O","O","O","O","O","O","O","O",
+    "B","B","B","B","B","B","B","B","B"
+  ],
+  "oracle_solution": "R U R' U' R' F R F'",
+  "cfop_stage": "OLL",
+  "notes": "OLL case. Undoing R U R' U' R' F R F' from solved gives a specific OLL state."
+}
