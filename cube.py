@@ -15,7 +15,7 @@ Each face is laid out as:
   6 7 8
 
 Colors: W=White, R=Red, G=Green, Y=Yellow, O=Orange, B=Blue
-Standard orientation: U=White, F=Green, R=Red, D=Yellow, L=Orange, B=Blue
+Standard orientation: U=Yellow, F=Red, R=Green, D=White, L=Blue, B=Orange
 """
 
 import copy
@@ -23,19 +23,122 @@ import copy
 # Face offsets
 U, R, F, D, L, B = 0, 9, 18, 27, 36, 45
 
+# --- Orientation mapping ---
+
+# Map each color to which absolute face it lives on in solved state
+COLOR_TO_FACE = {
+    'Y': U, 'G': R, 'R': F, 'W': D, 'B': L, 'O': B
+}
+
+OPPOSITE_COLOR = {
+    'Y': 'W', 'W': 'Y', 'G': 'B', 'B': 'G', 'O': 'R', 'R': 'O'
+}
+
+FACE_OFFSET_TO_NAME = {U: 'U', R: 'R', F: 'F', D: 'D', L: 'L', B: 'B'}
+
+# Which whole-cube rotation follows each absolute face
+FACE_TO_ROTATION = {
+    R: 'x',  L: "x'",
+    U: 'y',  D: "y'",
+    F: 'z',  B: "z'",
+}
+
+
+def invert_moves(moves_str):
+    """Invert a move sequence (reverse order, invert each move)."""
+    moves = moves_str.split()
+    inverted = []
+    for m in reversed(moves):
+        if m.endswith("'"):
+            inverted.append(m[:-1])
+        elif m.endswith("2"):
+            inverted.append(m)  # double move is its own inverse
+        else:
+            inverted.append(m + "'")
+    return " ".join(inverted)
+
+
+def get_orientation_map(top, front, right):
+    """Given an orientation as (top_color, front_color, right_color),
+    return a dict mapping relative face letters to absolute face offsets."""
+    return {
+        'U': COLOR_TO_FACE[top],
+        'D': COLOR_TO_FACE[OPPOSITE_COLOR[top]],
+        'F': COLOR_TO_FACE[front],
+        'B': COLOR_TO_FACE[OPPOSITE_COLOR[front]],
+        'R': COLOR_TO_FACE[right],
+        'L': COLOR_TO_FACE[OPPOSITE_COLOR[right]],
+    }
+
+
+def remap_move(move_str, face_map):
+    """Remap a single move from the LLM's orientation to absolute notation."""
+    move_str = move_str.strip()
+    if not move_str:
+        return move_str
+
+    # Parse modifier (' or 2)
+    if len(move_str) >= 2 and move_str[-1] == "'":
+        base, modifier = move_str[:-1], "'"
+    elif len(move_str) >= 2 and move_str[-1] == '2':
+        base, modifier = move_str[:-1], "2"
+    else:
+        base, modifier = move_str, ""
+
+    # Face moves (R, L, U, D, F, B)
+    if base in 'URFDLB':
+        abs_name = FACE_OFFSET_TO_NAME[face_map[base]]
+        return abs_name + modifier
+
+    # Wide moves (r, l, u, d, f, b) — same remap, lowercase
+    if base in 'urfdlb':
+        abs_name = FACE_OFFSET_TO_NAME[face_map[base.upper()]].lower()
+        return abs_name + modifier
+
+    # Rotations (x, y, z)
+    axis_to_relative_face = {'x': 'R', 'y': 'U', 'z': 'F'}
+    if base in axis_to_relative_face:
+        rel_face = axis_to_relative_face[base]
+        abs_offset = face_map[rel_face]
+        abs_rot = FACE_TO_ROTATION[abs_offset]  # e.g. 'x', "z'", etc.
+
+        # Apply the move's modifier on top of the rotation's inherent direction
+        if abs_rot.endswith("'"):
+            abs_base = abs_rot[:-1]
+            inverted = True
+        else:
+            abs_base = abs_rot
+            inverted = False
+
+        if modifier == "'":
+            # Invert: flip the direction
+            return abs_base if inverted else abs_base + "'"
+        elif modifier == "2":
+            # 180° — direction doesn't matter
+            return abs_base + "2"
+        else:
+            return abs_rot
+
+    return move_str  # Unknown — pass through
+
+
+def remap_moves(moves_str, face_map):
+    """Remap a full space-separated move sequence to absolute notation."""
+    return ' '.join(remap_move(m, face_map) for m in moves_str.split())
+
 SOLVED_STATE = [
-    # U face (White)
-    'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W',
-    # R face (Red)
-    'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R',
-    # F face (Green)
-    'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G',
-    # D face (Yellow)
+    # U face (Yellow)
     'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y',
-    # L face (Orange)
-    'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O',
-    # B face (Blue)
+    # R face (Green)
+    'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G',
+    # F face (Red)
+    'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R',
+    # D face (White)
+    'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W',
+    # L face (Blue)
     'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B',
+    # B face (Orange)
+    'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O',
 ]
 
 
@@ -245,6 +348,12 @@ class Cube:
         for move in moves_str.split():
             self.apply_move(move)
 
+    def apply_moves_oriented(self, moves_str, top, front, right):
+        """Apply moves interpreted from a given orientation (top, front, right colors).
+        Remaps moves to absolute notation before applying."""
+        face_map = get_orientation_map(top, front, right)
+        self.apply_moves(remap_moves(moves_str, face_map))
+
     def get_face(self, face_offset):
         """Return 9-element list for a face."""
         return self.state[face_offset:face_offset+9]
@@ -284,14 +393,20 @@ class Cube:
         return all(s[i] == center for i in edges)
 
 
-def verify_solution(initial_state, goal_state, moves_str):
+def verify_solution(initial_state, goal_state, moves_str, orientation=None):
     """
     Verify that applying moves_str to initial_state produces goal_state.
+    orientation: optional tuple (top, front, right) — if provided, moves are
+    interpreted from that frame of reference.
     Returns (success: bool, resulting_state: Cube)
     """
     cube = Cube(initial_state)
     try:
-        cube.apply_moves(moves_str)
+        if orientation:
+            top, front, right = orientation
+            cube.apply_moves_oriented(moves_str, top, front, right)
+        else:
+            cube.apply_moves(moves_str)
     except ValueError as e:
         return False, str(e)
     return cube.state == goal_state, cube
@@ -308,5 +423,21 @@ if __name__ == "__main__":
     for _ in range(6):
         c.apply_moves("R U R' U'")
     assert c.is_solved(), "Sexy move x6 should return to solved state"
+
+    # Orientation remapping: (Y, R, G) should be identity
+    # U=Yellow, F=Red, R=Green matches the absolute frame
+    fm = get_orientation_map('Y', 'R', 'G')
+    assert remap_move('R', fm) == 'R'
+    assert remap_move("U'", fm) == "U'"
+    assert remap_move('F', fm) == 'F'
+    assert remap_move('x', fm) == 'x'
+
+    # Oriented moves with identity should match absolute
+    c1 = Cube()
+    c1.apply_moves("R U R' U'")
+
+    c2 = Cube()
+    c2.apply_moves_oriented("R U R' U'", 'Y', 'R', 'G')
+    assert c1.state == c2.state, "Identity orientation should match absolute"
 
     print("All sanity checks passed.")

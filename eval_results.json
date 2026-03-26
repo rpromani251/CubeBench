@@ -1,0 +1,1263 @@
+[
+  {
+    "task_id": "task_00a_one_move_U",
+    "task_file": "tasks/easy/task_00a_one_move_U.json",
+    "difficulty": "easy",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "Looking at this, I need to figure out what's going on with the last layer.\n\nThe cube has:\n- U face: all yellow (OLL done)\n- D face: all white\n- Bottom two layers: solved\n- Top row of front (red center): blue stickers\n- Top row of right (green center): red stickers\n- Top row of back (orange center): green stickers\n- Top row of left (blue center): orange stickers\n\nSo the top row colors are shifted. Let me trace the cycle:\n- Front has blue (should be on left)\n- Right has red (should be on front)\n- Back has green (should be on right)\n- Left has orange (should be on back)\n\nSo: blue\u2192front, red\u2192right, green\u2192back, orange\u2192left, but currently blue is on front, red is on right... wait, let me re-read.\n\nFront (red center) has blue top row. Right (green center) has red top row. Back (orange center) has green top row. Left (blue center) has orange top row.\n\nSo the U layer needs to rotate so that:\n- Red goes from right to front \u2192 clockwise rotation needed?\n\nIf I do U', the top layer rotates counter-clockwise (from top view). Let me think about what U' does:\n- U' moves the front top row to the right, right top row to the back, back top row to the left, left top row to the front.\n\nCurrently: Front=blue, Right=red, Back=green, Left=orange\nAfter U': Front=orange, Right=blue, Back=red, Left=green\n\nThat doesn't solve it.\n\nIf I do U (clockwise from top): front top row goes to left, right goes to front, back goes to right, left goes to back.\nAfter U: Front=red, Right=green, Back=orange, Left=blue \u2713\n\nThat solves it! The top row of front becomes red (from right), right becomes green (from back), back becomes orange (from left), left becomes blue (from front).\n\nSince all top row stickers on each face are the same color (all three stickers), this means all the U-layer pieces just need one U turn.\n\n(Y, R, G)\nU",
+    "usage": {
+      "prompt_tokens": 995,
+      "completion_tokens": 512,
+      "total_tokens": 1507,
+      "cost": 0.017775,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.017775,
+        "upstream_inference_prompt_cost": 0.004975,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "G"
+    ],
+    "moves": "U",
+    "pass": true,
+    "status": "pass"
+  },
+  {
+    "task_id": "task_00a_one_move_U",
+    "task_file": "tasks/easy/task_00a_one_move_U.json",
+    "difficulty": "easy",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, R, G)\nU M2 U M U2 M' U M2",
+    "usage": {
+      "prompt_tokens": 927,
+      "completion_tokens": 22,
+      "total_tokens": 949,
+      "cost": 0.0026475,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0026475,
+        "upstream_inference_prompt_cost": 0.0023175,
+        "upstream_inference_completions_cost": 0.00033
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "G"
+    ],
+    "moves": "U M2 U M U2 M' U M2",
+    "pass": false,
+    "error": "Unknown move: M2",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00a_one_move_U",
+    "task_file": "tasks/easy/task_00a_one_move_U.json",
+    "difficulty": "easy",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": ") by 90 degrees.\nWait, if L (Blue) moved to F, F (",
+    "usage": {
+      "prompt_tokens": 953,
+      "completion_tokens": 508,
+      "total_tokens": 1461,
+      "cost": 0.008002,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.008002,
+        "upstream_inference_prompt_cost": 0.001906,
+        "upstream_inference_completions_cost": 0.006096
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 487,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Could not find orientation tuple in output",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00b_one_move_D",
+    "task_file": "tasks/easy/task_00b_one_move_D.json",
+    "difficulty": "easy",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "Looking at this, I need to figure out what's going on. The cube is almost solved but the bottom row of each side face is wrong:\n\n- Front (red center) has green on bottom row\n- Right (green center) has orange on bottom row\n- Back (orange center) has blue on bottom row\n- Left (blue center) has red on bottom row\n\nThis means the D layer is rotated. The green bottom row is on the front face (red center), but green should be on the right face. So the D layer needs to rotate so that:\n- Green goes from front \u2192 right\n- Orange goes from right \u2192 back\n- Blue goes from back \u2192 left\n- Red goes from left \u2192 front\n\nThat's a clockwise rotation (when viewed from below), which is a D' move (counter-clockwise when viewed from above... let me think carefully).\n\nD face rotation: Looking down at D, a D move rotates the bottom layer clockwise (from the perspective of looking at the D face). From above, that moves:\n- Front bottom row \u2192 left\n- Left bottom row \u2192 back\n- Back bottom row \u2192 right\n- Right bottom row \u2192 front\n\nLet me check D': \n- Front bottom row \u2192 right\n- Right bottom row \u2192 back\n- Back bottom row \u2192 left\n- Left bottom row \u2192 front\n\nWith D': green (on front) \u2192 right \u2713, orange (on right) \u2192 back \u2713, blue (on back) \u2192 left \u2713, red (on left) \u2192 front \u2713\n\nSo I just need a D' move.\n\n```\n(Y, R, G)\nD'\n```",
+    "usage": {
+      "prompt_tokens": 995,
+      "completion_tokens": 361,
+      "total_tokens": 1356,
+      "cost": 0.014,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.014,
+        "upstream_inference_prompt_cost": 0.004975,
+        "upstream_inference_completions_cost": 0.009025
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "G"
+    ],
+    "moves": "D'",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y Y\n  Y Y Y\n  Y Y Y\nR:\n  G G G\n  G G G\n  B B B\nF:\n  R R R\n  R R R\n  O O O\nD:\n  W W W\n  W W W\n  W W W\nL:\n  B B B\n  B B B\n  G G G\nB:\n  O O O\n  O O O\n  R R R",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00b_one_move_D",
+    "task_file": "tasks/easy/task_00b_one_move_D.json",
+    "difficulty": "easy",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, R, G)\nD",
+    "usage": {
+      "prompt_tokens": 927,
+      "completion_tokens": 11,
+      "total_tokens": 938,
+      "cost": 0.0024825,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024825,
+        "upstream_inference_prompt_cost": 0.0023175,
+        "upstream_inference_completions_cost": 0.000165
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "G"
+    ],
+    "moves": "D",
+    "pass": true,
+    "status": "pass"
+  },
+  {
+    "task_id": "task_00b_one_move_D",
+    "task_file": "tasks/easy/task_00b_one_move_D.json",
+    "difficulty": "easy",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(Y, R, B)\nD'",
+    "usage": {
+      "prompt_tokens": 953,
+      "completion_tokens": 500,
+      "total_tokens": 1453,
+      "cost": 0.007906,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.007906,
+        "upstream_inference_prompt_cost": 0.001906,
+        "upstream_inference_completions_cost": 0.006
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 490,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "B"
+    ],
+    "moves": "D'",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y Y\n  Y Y Y\n  Y Y Y\nR:\n  G G G\n  G G G\n  B B B\nF:\n  R R R\n  R R R\n  O O O\nD:\n  W W W\n  W W W\n  W W W\nL:\n  B B B\n  B B B\n  G G G\nB:\n  O O O\n  O O O\n  R R R",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00c_one_move_F",
+    "task_file": "tasks/easy/task_00c_one_move_F.json",
+    "difficulty": "easy",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "Looking at this situation, I need to understand what's happening. The front face is red, back face is orange, and the back two layers are solved. But the front slice is rotated.\n\nLet me work out the orientation. If F is red and B is orange, then the sides would be some arrangement of green, blue, white, yellow. Since the back two layers are solved, I need to figure out which colors are where.\n\nThe key clue: the bottom row of U has three green stickers, left column of R has three white stickers, top row of D has three blue stickers, and right column of L has three yellow stickers.\n\nIn a solved cube with red front and orange back, let me determine the standard color arrangement. With red in front and orange in back:\n- U = yellow, D = white, R = green, L = blue (standard Western color scheme)\n\nBut wait - the back two layers are solved, so the centers and back portions are correct. That means:\n- U center = yellow, D center = white, R center = green, L center = blue\n\nNow the front slice is misaligned:\n- Bottom row of U has green (should be yellow) \u2192 green is where yellow should be\n- Left column of R has white (should be green) \u2192 white is where green should be  \n- Top row of D has blue (should be white) \u2192 blue is where white should be\n- Right column of L has yellow (should be blue) \u2192 yellow is where blue should be\n\nSo the front slice (the layer between F and the middle) has been rotated. The colors cycle: yellow\u2192green\u2192white\u2192blue\u2192yellow. That's a 90\u00b0 clockwise rotation of the front slice when viewed from the front.\n\nGreen is on top (where yellow should be), white is on right (where green should be), blue is on bottom (where white should be), yellow is on left (where blue should be). This is a clockwise rotation of the front slice as seen from the front.\n\nTo fix this, I need to rotate the front slice counterclockwise 90\u00b0 (as viewed from the front). The front slice rotation can be done with a wide front move minus the front face move.\n\nA wide `f` move turns both the F face and the slice behind it. Since the F face is already correct (entirely red), I need to turn",
+    "usage": {
+      "prompt_tokens": 984,
+      "completion_tokens": 512,
+      "total_tokens": 1496,
+      "cost": 0.01772,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.01772,
+        "upstream_inference_prompt_cost": 0.00492,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Could not find orientation tuple in output",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00c_one_move_F",
+    "task_file": "tasks/easy/task_00c_one_move_F.json",
+    "difficulty": "easy",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, R, G)\nR2 F2 L2 R2 F2 L2",
+    "usage": {
+      "prompt_tokens": 915,
+      "completion_tokens": 22,
+      "total_tokens": 937,
+      "cost": 0.0026175,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0026175,
+        "upstream_inference_prompt_cost": 0.0022875,
+        "upstream_inference_completions_cost": 0.00033
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "G"
+    ],
+    "moves": "R2 F2 L2 R2 F2 L2",
+    "pass": false,
+    "resulting_state": "U:\n  G Y G\n  Y Y Y\n  Y G Y\nR:\n  B G Y\n  B G Y\n  B G Y\nF:\n  O R O\n  O R O\n  O R O\nD:\n  W B W\n  W W W\n  B W B\nL:\n  W B G\n  W B G\n  W B G\nB:\n  R O R\n  R O R\n  R O R",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00c_one_move_F",
+    "task_file": "tasks/easy/task_00c_one_move_F.json",
+    "difficulty": "easy",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(W, R, B)\nF'\n",
+    "usage": {
+      "prompt_tokens": 942,
+      "completion_tokens": 501,
+      "total_tokens": 1443,
+      "cost": 0.007896,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.007896,
+        "upstream_inference_prompt_cost": 0.001884,
+        "upstream_inference_completions_cost": 0.006012
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 490,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "W",
+      "R",
+      "B"
+    ],
+    "moves": "F'",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y Y\n  Y Y Y\n  W W W\nR:\n  B G G\n  B G G\n  B G G\nF:\n  R R R\n  R R R\n  R R R\nD:\n  Y Y Y\n  W W W\n  W W W\nL:\n  B B G\n  B B G\n  B B G\nB:\n  O O O\n  O O O\n  O O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00d_one_move_B",
+    "task_file": "tasks/easy/task_00d_one_move_B.json",
+    "difficulty": "easy",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "Looking at this carefully:\n\nThe cube is almost solved with F=Red, B=Orange. The front two layers are solved, but the back slice (the layer adjacent to the B face) is rotated.\n\nLet me work out the orientation. If F=Red and B=Orange, then with standard color scheme:\n- F=Red, B=Orange\n- U=Yellow, D=White (normally), R=Green, L=Blue\n\nBut the description says the top row of U has three blue stickers, right column of R has three yellow stickers, bottom row of D has three green stickers, and left column of L has three white stickers.\n\nSo the back slice has been rotated. Let me figure out which way:\n\nWith F=Red, B=Orange, and normally U=Yellow, R=Green, D=White, L=Blue:\n\nThe back column of U should be yellow, back column of R should be green, back column of D should be white, back column of L should be blue.\n\nInstead: top row of U (the back row from this perspective) = blue, right column of R (back column) = yellow, bottom row of D (back row) = green, left column of L (back column) = white.\n\nSo: U's back row: blue (was yellow), R's back column: yellow (was green), D's back row: green (was white), L's back column: white (was blue).\n\nThis means: Yellow\u2192R, Green\u2192D, White\u2192L, Blue\u2192U. That's a clockwise rotation when looking at the B face. So the back slice rotated clockwise (looking from back), which is equivalent to a `b` move (wide move of B is clockwise looking at B face... but we need just the middle slice).\n\nActually, a `b` move would turn the slice adjacent to B plus the B face itself. But B face is already solved (entirely orange). So I need to undo just the inner slice rotation.\n\nThe back slice rotated CW when viewed from the back. To fix it, I need to rotate it CCW when viewed from back.\n\nUsing the relationship: rotating the back inner slice CW (looking from back) = `b` without moving B itself = `b B'` (wide b then undo B).\n\nTo undo it: `B b",
+    "usage": {
+      "prompt_tokens": 984,
+      "completion_tokens": 512,
+      "total_tokens": 1496,
+      "cost": 0.01772,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.01772,
+        "upstream_inference_prompt_cost": 0.00492,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Could not find orientation tuple in output",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00d_one_move_B",
+    "task_file": "tasks/easy/task_00d_one_move_B.json",
+    "difficulty": "easy",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, R, G)\nR2 L2 U2 D2 R2 L2",
+    "usage": {
+      "prompt_tokens": 915,
+      "completion_tokens": 22,
+      "total_tokens": 937,
+      "cost": 0.0026175,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0026175,
+        "upstream_inference_prompt_cost": 0.0022875,
+        "upstream_inference_completions_cost": 0.00033
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "G"
+    ],
+    "moves": "R2 L2 U2 D2 R2 L2",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y Y\n  Y Y Y\n  B B B\nR:\n  W B B\n  G G Y\n  W B B\nF:\n  O O O\n  R R R\n  O O O\nD:\n  G G G\n  W W W\n  W W W\nL:\n  G G Y\n  W B B\n  G G Y\nB:\n  R R R\n  O O O\n  R R R",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00d_one_move_B",
+    "task_file": "tasks/easy/task_00d_one_move_B.json",
+    "difficulty": "easy",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(W, R, B)\nB'",
+    "usage": {
+      "prompt_tokens": 941,
+      "completion_tokens": 499,
+      "total_tokens": 1440,
+      "cost": 0.00787,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.00787,
+        "upstream_inference_prompt_cost": 0.001882,
+        "upstream_inference_completions_cost": 0.005988
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 489,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "W",
+      "R",
+      "B"
+    ],
+    "moves": "B'",
+    "pass": false,
+    "resulting_state": "U:\n  W W W\n  Y Y Y\n  Y Y Y\nR:\n  G G B\n  G G B\n  G G B\nF:\n  R R R\n  R R R\n  R R R\nD:\n  W W W\n  W W W\n  Y Y Y\nL:\n  G B B\n  G B B\n  G B B\nB:\n  O O O\n  O O O\n  O O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00e_one_move_R",
+    "task_file": "tasks/easy/task_00e_one_move_R.json",
+    "difficulty": "easy",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "Looking at this, I need to figure out the cube state:\n\n- R face is entirely green, L face is entirely blue\n- Left two layers are solved\n- The right column of U has three orange stickers (should be white/yellow depending on orientation)\n- The right column of F has three yellow stickers\n- The right column of D has three red stickers\n- The left column of B has three white stickers (note: left column of B, when looking at B, corresponds to the right side of the cube)\n\nSince R is green and L is blue, and the left two layers are solved, I need to figure out the standard color scheme. Green opposite blue, so R=green, L=blue. The centers tell us: if R=green, then with standard color scheme, F=red, B=orange, U=white, D=yellow.\n\nNow the right column (adjacent to R face) is misaligned:\n- U right column has orange (should be white) \u2014 orange is the B face color\n- F right column has yellow (should be red) \u2014 yellow is the D face color\n- D right column has red (should be yellow) \u2014 red is the F face color\n- B left column has white (should be orange) \u2014 white is the U face color\n\nSo the right slice (the M-slice adjacent to R, which is actually the R column of each face) has been rotated. Let me trace the cycle:\n- U's right column shows orange (B's color)\n- B's left column shows white (U's color) \u2014 so U\u2192B\n- Wait, let me think in terms of where colors went.\n\nThe right column positions cycle through U\u2192F\u2192D\u2192B\u2192U (via an R-slice rotation). Currently:\n- U has orange (from B)\n- F has yellow (from D)\n- D has red (from F)\n- B has white (from U)\n\nSo: B\u2192U, D\u2192F, F\u2192D, U\u2192B... That's U\u2194B and F\u2194D on the right slice. That's a 180\u00b0 rotation of the right slice.\n\nBut wait, the right slice adjacent to R face \u2014 this is actually an R move issue. An R move cycles U\u2192B(reversed)\u2192D\u2192F\u2192U. Let me reconsider.\n\nAn",
+    "usage": {
+      "prompt_tokens": 984,
+      "completion_tokens": 512,
+      "total_tokens": 1496,
+      "cost": 0.01772,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.01772,
+        "upstream_inference_prompt_cost": 0.00492,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Could not find orientation tuple in output",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00e_one_move_R",
+    "task_file": "tasks/easy/task_00e_one_move_R.json",
+    "difficulty": "easy",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, O, G)\nR2",
+    "usage": {
+      "prompt_tokens": 915,
+      "completion_tokens": 12,
+      "total_tokens": 927,
+      "cost": 0.0024675,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024675,
+        "upstream_inference_prompt_cost": 0.0022875,
+        "upstream_inference_completions_cost": 0.00018
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "O",
+      "G"
+    ],
+    "moves": "R2",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y R\n  Y Y R\n  Y Y R\nR:\n  G G G\n  G G G\n  G G G\nF:\n  R R W\n  R R W\n  R R W\nD:\n  W W O\n  W W O\n  W W O\nL:\n  B B B\n  B B B\n  B B B\nB:\n  Y O O\n  Y O O\n  Y O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00e_one_move_R",
+    "task_file": "tasks/easy/task_00e_one_move_R.json",
+    "difficulty": "easy",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(W, R, G)\nR'\n",
+    "usage": {
+      "prompt_tokens": 942,
+      "completion_tokens": 500,
+      "total_tokens": 1442,
+      "cost": 0.007884,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.007884,
+        "upstream_inference_prompt_cost": 0.001884,
+        "upstream_inference_completions_cost": 0.006
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 489,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "W",
+      "R",
+      "G"
+    ],
+    "moves": "R'",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y W\n  Y Y W\n  Y Y W\nR:\n  G G G\n  G G G\n  G G G\nF:\n  R R O\n  R R O\n  R R O\nD:\n  W W Y\n  W W Y\n  W W Y\nL:\n  B B B\n  B B B\n  B B B\nB:\n  R O O\n  R O O\n  R O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00f_one_move_L",
+    "task_file": "tasks/easy/task_00f_one_move_L.json",
+    "difficulty": "easy",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "Looking at this, I need to figure out the current state and fix it.\n\nLet me establish the orientation. The R face is entirely green, L face is entirely blue. The right two layers are solved, meaning everything except the left slice is correct.\n\nWith green on R and blue on L, the standard color scheme gives us:\n- R = Green, L = Blue\n- U = White, D = Yellow, F = Red, B = Orange (one possibility)\n\nBut wait - the right two layers are solved, so the centers define the faces. Let me think about what the solved state should look like.\n\nWith R=Green, L=Blue, the other faces depend on orientation. Let me try: U=White, D=Yellow, F=Red, B=Orange.\n\nIn the solved state:\n- Left column of U should be white\n- Left column of F should be red\n- Left column of D should be yellow\n- Right column of B (which is adjacent to the left slice) should be orange\n\nBut currently:\n- Left column of U has red (should be white)\n- Left column of F has white (should be red)\n- Left column of D has orange (should be yellow)\n- Right column of B has yellow (should be orange)\n\nSo the left slice has been rotated. The left slice (the middle layer between L and the rest) \u2014 actually this is the L layer's adjacent slice, which is the `l` wide move minus `L`.\n\nLet me trace the cycle: U\u2192F position has red, F\u2192D position has white... wait.\n\nLooking at it as an `l` rotation: if I do an `l` move (clockwise when looking from the left, which means downward on the front side):\n- U left column \u2192 F left column\n- F left column \u2192 D left column  \n- D left column \u2192 B right column\n- B right column \u2192 U left column\n\nCurrent state: U=red, F=white, D=orange, B=yellow\nSolved state: U=white, F=red, D=yellow, B=orange\n\nSo: where white should be (U), we have red (from F). Where red should be (F), we have white (from U). Where yellow should be (D), we have orange (from B). Where orange should be (B), we have yellow (from",
+    "usage": {
+      "prompt_tokens": 984,
+      "completion_tokens": 512,
+      "total_tokens": 1496,
+      "cost": 0.01772,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.01772,
+        "upstream_inference_prompt_cost": 0.00492,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Could not find orientation tuple in output",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00f_one_move_L",
+    "task_file": "tasks/easy/task_00f_one_move_L.json",
+    "difficulty": "easy",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, O, G)\nL2",
+    "usage": {
+      "prompt_tokens": 915,
+      "completion_tokens": 12,
+      "total_tokens": 927,
+      "cost": 0.0024675,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0024675,
+        "upstream_inference_prompt_cost": 0.0022875,
+        "upstream_inference_completions_cost": 0.00018
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "O",
+      "G"
+    ],
+    "moves": "L2",
+    "pass": false,
+    "resulting_state": "U:\n  O Y Y\n  O Y Y\n  O Y Y\nR:\n  G G G\n  G G G\n  G G G\nF:\n  Y R R\n  Y R R\n  Y R R\nD:\n  R W W\n  R W W\n  R W W\nL:\n  B B B\n  B B B\n  B B B\nB:\n  O O W\n  O O W\n  O O W",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_00f_one_move_L",
+    "task_file": "tasks/easy/task_00f_one_move_L.json",
+    "difficulty": "easy",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(W, R, G)\nL'",
+    "usage": {
+      "prompt_tokens": 941,
+      "completion_tokens": 500,
+      "total_tokens": 1441,
+      "cost": 0.007882,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.007882,
+        "upstream_inference_prompt_cost": 0.001882,
+        "upstream_inference_completions_cost": 0.006
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 490,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "W",
+      "R",
+      "G"
+    ],
+    "moves": "L'",
+    "pass": false,
+    "resulting_state": "U:\n  W Y Y\n  W Y Y\n  W Y Y\nR:\n  G G G\n  G G G\n  G G G\nF:\n  O R R\n  O R R\n  O R R\nD:\n  Y W W\n  Y W W\n  Y W W\nL:\n  B B B\n  B B B\n  B B B\nB:\n  O O R\n  O O R\n  O O R",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_01_f2l_basic_pair_insert",
+    "task_file": "tasks/easy/task_01_f2l_basic_pair_insert.json",
+    "difficulty": "easy",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "I need to insert the white-red-green corner and red-green edge into the front-right slot (between F and R faces).\n\nLet me set up the orientation. The front-right slot is between F and R faces. With white on bottom, the front-right slot needs:\n- Corner: white-red-green at DFR\n- Edge: red-green at FR\n\nLet me hold the cube with yellow on top, red on front, green on right. This way the front-right slot is the red-green slot.\n\n**Current state:**\n- The white-red-green corner is at UFR with white facing the R face. At UFR with this orientation (Y top, R front, G right), the three stickers are: U face, F face, R face. White is on R face, so the R-face sticker is white. The remaining colors (red and green) go to U and F faces. Since this corner is white-red-green, and at UFR: the U sticker and F sticker are red and green. Given the corner's colors and position, red faces U and green faces F, or green faces U and red faces F.\n\nLet me think about the actual corner orientation. The corner white-red-green at UFR with white on R: this means white is on the R face. For a standard cube (white opposite yellow, red-green adjacent), the corner DFR should have white on D, red on F, green on R. With white facing R at UFR, this is a specific twist case.\n\n- The red-green edge is at UF with green facing up (U face). So at UF: green is on U, red is on F.\n\nSo the edge has green on U and red on F. The edge needs to go to FR with red on F and green on R.\n\nThe corner at UFR has white on R. The other two stickers: since it's the white-red-green corner, and the faces at UFR are U, F, R \u2014 with white on R, we need to figure out which color is on U and F. For the DFR solved position: white\u2192D, red\u2192F, green\u2192R. The corner's color cycle is white\u2192red\u2192green (clockwise). With white on R (rotated 120\u00b0 CW from solved R\u2192D",
+    "usage": {
+      "prompt_tokens": 983,
+      "completion_tokens": 512,
+      "total_tokens": 1495,
+      "cost": 0.017715,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.017715,
+        "upstream_inference_prompt_cost": 0.004915,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Could not find orientation tuple in output",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_01_f2l_basic_pair_insert",
+    "task_file": "tasks/easy/task_01_f2l_basic_pair_insert.json",
+    "difficulty": "easy",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, R, G)\nU R U' R' U' F' U F",
+    "usage": {
+      "prompt_tokens": 911,
+      "completion_tokens": 22,
+      "total_tokens": 933,
+      "cost": 0.0026075,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0026075,
+        "upstream_inference_prompt_cost": 0.0022775,
+        "upstream_inference_completions_cost": 0.00033
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "G"
+    ],
+    "moves": "U R U' R' U' F' U F",
+    "pass": false,
+    "resulting_state": "U:\n  G Y Y\n  Y Y Y\n  Y Y G\nR:\n  W O O\n  G G G\n  G G G\nF:\n  R B R\n  R R R\n  R R Y\nD:\n  W W R\n  W W W\n  W W W\nL:\n  Y R B\n  B B B\n  B B B\nB:\n  B G O\n  O O O\n  O O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_01_f2l_basic_pair_insert",
+    "task_file": "tasks/easy/task_01_f2l_basic_pair_insert.json",
+    "difficulty": "easy",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(Y, G, R)\nU R U' R' U' F' U F\n",
+    "usage": {
+      "prompt_tokens": 945,
+      "completion_tokens": 508,
+      "total_tokens": 1453,
+      "cost": 0.007986,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.007986,
+        "upstream_inference_prompt_cost": 0.00189,
+        "upstream_inference_completions_cost": 0.006096
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 487,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "R"
+    ],
+    "moves": "U R U' R' U' F' U F",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y G\n  Y Y R\n  B O R\nR:\n  W Y W\n  G G R\n  G G W\nF:\n  Y G B\n  R R Y\n  G R Y\nD:\n  Y W R\n  W W W\n  W W G\nL:\n  B B R\n  B B G\n  B B O\nB:\n  O O O\n  B O O\n  R O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_03_pll_t_perm",
+    "task_file": "tasks/hard/task_03_pll_t_perm.json",
+    "difficulty": "hard",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "Looking at this PLL case, I need to identify what permutation this is.\n\nThe state described:\n- UL and UR edges need to swap\n- UFR and UBR corners need to swap\n\nThis means two adjacent edges (left and right) swap, and two adjacent corners (both on the right side: UFR and UBR) swap.\n\nLet me think about this carefully. The UL and UR edges are opposite edges (not adjacent), and UFR and UBR corners are adjacent (sharing the R face).\n\nThis is a T-perm. The T-perm swaps:\n- Two adjacent corners (UFR and UBR)\n- Two opposite edges (UF and UB) \u2014 wait, let me reconsider.\n\nActually, let me reconsider the standard PLL cases. \n\nThe swaps are: UL\u2194UR edges and UFR\u2194UBR corners.\n\nUL and UR are opposite edges on the U layer. UFR and UBR are adjacent corners sharing the R side.\n\nLet me think about which PLL this matches. If I do a U rotation to set things up differently:\n\nWith a U move: UL\u2192UF, UR\u2192UB, UFR\u2192UFL, UBR\u2192UFR. So the swaps become UF\u2194UB edges and UFL\u2194UFR corners. That's the T-perm pattern (diagonal edge swap + adjacent corner swap on the front).\n\nWait, actually the standard T-perm swaps UR\u2194UB edges and UFR\u2194UBR corners. Let me re-examine.\n\nStandard T-perm: swaps UFR\u2194UBR corners and UR\u2194UB edges.\n\nMy case swaps UFR\u2194UBR corners and UL\u2194UR edges. \n\nIf I apply U' first: UL\u2192UB, UR\u2192UF, UFR\u2192UBR (wait, that changes corners too). Let me think differently.\n\nActually, I can use a J-perm. The Jb-perm swaps UFR\u2194UBR corners and UR\u2194UB edges. The Ja-perm swaps UFR\u2194UBR corners and UF\u2194UR",
+    "usage": {
+      "prompt_tokens": 960,
+      "completion_tokens": 512,
+      "total_tokens": 1472,
+      "cost": 0.0176,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0176,
+        "upstream_inference_prompt_cost": 0.0048,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Could not find orientation tuple in output",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_03_pll_t_perm",
+    "task_file": "tasks/hard/task_03_pll_t_perm.json",
+    "difficulty": "hard",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, G, O)\nR U' R U R U R U' R' U' R2",
+    "usage": {
+      "prompt_tokens": 892,
+      "completion_tokens": 26,
+      "total_tokens": 918,
+      "cost": 0.00262,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.00262,
+        "upstream_inference_prompt_cost": 0.00223,
+        "upstream_inference_completions_cost": 0.00039
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "O"
+    ],
+    "moves": "R U' R U R U R U' R' U' R2",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y Y\n  Y Y Y\n  Y Y Y\nR:\n  O R R\n  G G G\n  G G G\nF:\n  R O G\n  R R R\n  R R R\nD:\n  W W W\n  W W W\n  W W W\nL:\n  B G B\n  B B B\n  B B B\nB:\n  G B O\n  O O O\n  O O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_03_pll_t_perm",
+    "task_file": "tasks/hard/task_03_pll_t_perm.json",
+    "difficulty": "hard",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(Y, G, R)\nR' U' F' R U R' U' R",
+    "usage": {
+      "prompt_tokens": 920,
+      "completion_tokens": 508,
+      "total_tokens": 1428,
+      "cost": 0.007936,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.007936,
+        "upstream_inference_prompt_cost": 0.00184,
+        "upstream_inference_completions_cost": 0.006096
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 487,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "R"
+    ],
+    "moves": "R' U' F' R U R' U' R",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y W\n  Y Y Y\n  O O B\nR:\n  Y G G\n  Y G G\n  W W W\nF:\n  Y G R\n  R R R\n  O G O\nD:\n  G R G\n  W W R\n  W W R\nL:\n  G O B\n  B B B\n  B B Y\nB:\n  R B R\n  W O O\n  B O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_04_f2l_double_insert",
+    "task_file": "tasks/hard/task_04_f2l_double_insert.json",
+    "difficulty": "hard",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "I need to analyze the current state and insert both F2L pairs.\n\n**Front-right slot (between F and R faces):**\n- Corner: white-red-green at UFR with white facing right (so green is on top, red is on front)\n- Edge: red-green at UB with red facing up\n\n**Front-left slot (between F and L faces):**\n- Corner: white-orange-green at DFR with white facing front (misplaced - needs to go to DFL)\n- Edge: orange-green at UF with orange facing up\n\nLet me set up my orientation. With white on bottom, green in front, the front-right slot is green-red (between G and R faces) and front-left slot is green-orange (between G and O faces).\n\nWait, let me reconsider. The standard color scheme: white opposite yellow, red opposite orange, green opposite blue. Centers are fixed.\n\nFor the front-right pair to be red-green, I need the slot between F and R to correspond to red and green. If I hold green front and red right, that works. Top = yellow.\n\n**Orientation: (Y, G, R)**\n\nNow let me re-map:\n- UFR corner: white-red-green, white facing R. So on R face = white, U face = green, F face = red. This corner belongs at DFR (down-front-right in my holding).\n- Edge red-green at UB with red facing U. So U sticker = red, B sticker = green.\n\n**Front-right pair (green-red slot):**\n\nThe corner is at UFR with white on R (U=green, F=red). The edge is at UB with red on U, green on B.\n\nFirst, I need to pair them up and insert. The corner has white facing right - this is a common F2L case.\n\nLet me bring the edge to UF: U' brings UB edge to UR, U2 brings it to UF. Actually U brings UB to UL... Let me think: U moves top clockwise (looking down). UB \u2192 UL (U), UB \u2192 UF (U2), UB \u2192 UR (U').\n\nI'll use: U' to bring edge to ",
+    "usage": {
+      "prompt_tokens": 1028,
+      "completion_tokens": 512,
+      "total_tokens": 1540,
+      "cost": 0.01794,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.01794,
+        "upstream_inference_prompt_cost": 0.00514,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "R"
+    ],
+    "moves": "- UFR corner: white-red-green, white facing R. So on R face = white, U face = green, F face = red. This corner belongs at DFR (down-front-right in my holding).",
+    "pass": false,
+    "error": "Unknown move: -",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_04_f2l_double_insert",
+    "task_file": "tasks/hard/task_04_f2l_double_insert.json",
+    "difficulty": "hard",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, G, R)\nU R U' R' U' F' U F U' R U R' U2 R U' R' F R' F' R",
+    "usage": {
+      "prompt_tokens": 950,
+      "completion_tokens": 41,
+      "total_tokens": 991,
+      "cost": 0.00299,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.00299,
+        "upstream_inference_prompt_cost": 0.002375,
+        "upstream_inference_completions_cost": 0.000615
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "R"
+    ],
+    "moves": "U R U' R' U' F' U F U' R U R' U2 R U' R' F R' F' R",
+    "pass": false,
+    "resulting_state": "U:\n  W O R\n  Y Y Y\n  Y R W\nR:\n  G B Y\n  G G R\n  O W Y\nF:\n  G G O\n  O R W\n  W Y Y\nD:\n  R R G\n  W W R\n  W W O\nL:\n  B G R\n  B B Y\n  B B G\nB:\n  B G R\n  B O O\n  B O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_04_f2l_double_insert",
+    "task_file": "tasks/hard/task_04_f2l_double_insert.json",
+    "difficulty": "hard",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(Y, G, R)\nR U' R' U R U' R' U",
+    "usage": {
+      "prompt_tokens": 988,
+      "completion_tokens": 508,
+      "total_tokens": 1496,
+      "cost": 0.008072,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.008072,
+        "upstream_inference_prompt_cost": 0.001976,
+        "upstream_inference_completions_cost": 0.006096
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 488,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "R"
+    ],
+    "moves": "R U' R' U R U' R' U",
+    "pass": false,
+    "resulting_state": "U:\n  G R Y\n  B Y Y\n  Y Y R\nR:\n  G O O\n  R G B\n  G G B\nF:\n  O G W\n  G R Y\n  W R W\nD:\n  B W O\n  W W W\n  W W R\nL:\n  R R G\n  B B O\n  B B R\nB:\n  B G Y\n  Y O O\n  Y O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_05_full_last_layer",
+    "task_file": "tasks/hard/task_05_full_last_layer.json",
+    "difficulty": "hard",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "I need to analyze the last layer state carefully.\n\n**Orientation:** I'll hold the cube with Yellow on top, Red in front, Green on right.\n\n**Edges:** All edges have yellow facing up, so edges are oriented correctly.\n- UF: red-yellow (yellow up) \u2192 this is the yellow-red edge at UF\n- UR: orange-yellow (yellow up) \u2192 yellow-orange edge at UR\n- UL: green-yellow (yellow up) \u2192 yellow-green edge at UL\n- UB: blue-yellow (yellow up) \u2192 yellow-blue edge at UB\n\n**Corners (yellow on top, red front, green right):**\n- UFL: green-red-yellow with yellow facing up \u2192 yellow on U. So U=yellow, F=green, L=red. This is the green-red-yellow corner with yellow on top \u2014 correctly oriented.\n- UFR: green-orange-yellow with yellow facing front (F face). So F=yellow, U=green, R=orange. This corner has yellow on F \u2014 twisted.\n- UBR: red-blue-yellow with yellow facing right (R face). So R=yellow, U=red, B=blue. Yellow on R \u2014 twisted.\n- UBL: yellow-blue-orange with blue facing up. So U=blue, B=yellow(?). Let me re-read: \"yellow, blue, and orange corner in UBL, with blue facing up.\" So U=blue, and the other two stickers are yellow and orange on B and L faces. Yellow on B or L. This corner is twisted.\n\n**OLL Analysis:** Edges all oriented. One corner oriented (UFL), three corners not. Let me check:\n- UFL: yellow on U \u2713\n- UFR: yellow on F (pointing front)\n- UBR: yellow on R (pointing right)\n- UBL: yellow on U? No, blue facing up. So yellow NOT on U.\n\nCount of yellow on U: UFL(yes), UFR(no), UBR(no), UBL(no) = 1 yellow on top.\n\nThis doesn't match standard OLL. Let me recount: UFL has yellow up, and the three others don't. With all edges oriented,",
+    "usage": {
+      "prompt_tokens": 1023,
+      "completion_tokens": 512,
+      "total_tokens": 1535,
+      "cost": 0.017915,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.017915,
+        "upstream_inference_prompt_cost": 0.005115,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Could not find orientation tuple in output",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_05_full_last_layer",
+    "task_file": "tasks/hard/task_05_full_last_layer.json",
+    "difficulty": "hard",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, G, R)\nR U R' U' R' F R2 U' R' U' R U R' F' U R U' L' U R' U' L",
+    "usage": {
+      "prompt_tokens": 940,
+      "completion_tokens": 45,
+      "total_tokens": 985,
+      "cost": 0.003025,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.003025,
+        "upstream_inference_prompt_cost": 0.00235,
+        "upstream_inference_completions_cost": 0.000675
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "R"
+    ],
+    "moves": "R U R' U' R' F R2 U' R' U' R U R' F' U R U' L' U R' U' L",
+    "pass": false,
+    "resulting_state": "U:\n  Y R W\n  Y Y Y\n  Y Y Y\nR:\n  B R R\n  O G G\n  G G Y\nF:\n  R B O\n  R R Y\n  R W W\nD:\n  G G O\n  W W R\n  W W R\nL:\n  O G B\n  B B B\n  B B W\nB:\n  B W G\n  O O O\n  G O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_05_full_last_layer",
+    "task_file": "tasks/hard/task_05_full_last_layer.json",
+    "difficulty": "hard",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(Y, G, R)\nU2 R U R' U R U2 R",
+    "usage": {
+      "prompt_tokens": 980,
+      "completion_tokens": 508,
+      "total_tokens": 1488,
+      "cost": 0.008056,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.008056,
+        "upstream_inference_prompt_cost": 0.00196,
+        "upstream_inference_completions_cost": 0.006096
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 489,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "R"
+    ],
+    "moves": "U2 R U R' U R U2 R",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y Y\n  Y Y Y\n  W W W\nR:\n  B B B\n  B G G\n  G G G\nF:\n  R R R\n  R R R\n  Y R Y\nD:\n  O Y R\n  W W W\n  W W W\nL:\n  B O G\n  B B G\n  B B G\nB:\n  R G O\n  O O O\n  O O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_02_oll_sune",
+    "task_file": "tasks/medium/task_02_oll_sune.json",
+    "difficulty": "medium",
+    "model": "claude-opus-4.6",
+    "model_id": "anthropic/claude-opus-4.6",
+    "raw_output": "I need to analyze the OLL case. Let me identify the corner orientations:\n\n- **UBR**: yellow on top (correct)\n- **UBL**: yellow on the rear face (B face) \u2014 twisted clockwise\n- **UFL**: yellow on the left face (L face) \u2014 twisted clockwise\n- **UFR**: yellow on the front face (F face) \u2014 twisted clockwise\n\nAll four edges are already yellow on top, and one corner (UBR) is correct. Three corners have yellow twisted the same way (clockwise when viewed from top).\n\nThis is OLL case #26 (Sune) or #27 (Antisune). Let me verify:\n\nFor each corner, yellow is on which face:\n- UBR: U (correct)\n- UBL: B face (yellow pointing back)\n- UFL: L face (yellow pointing left)\n- UFR: F face (yellow pointing front)\n\nLet me think about this more carefully. When looking down at the U face:\n- UBR: yellow on U \u2713\n- UBL: yellow on B \u2014 this means yellow is rotated CW (when looking down at that corner)\n- UFL: yellow on L \u2014 yellow is rotated CW\n- UFR: yellow on F \u2014 yellow is rotated CW\n\nThree corners with yellow facing clockwise (away from U, on the face that is clockwise from the perspective of looking down). This is the **Antisune** case (OLL 26).\n\nThe standard Antisune algorithm with the correctly oriented corner at UBR:\n\nHolding with Yellow on top, I need to position so the solved corner (UBR) is in the right place. The standard Antisune (OLL 26) is: R U2 R' U' R U' R'\n\nLet me verify: Starting with Yellow top, Red front. The correct corner UBR is at back-right.\n\nActually, let me re-examine. With (Y, R, G) orientation: U=Yellow, F=Red, R=Green.\n\n- UBR corner: yellow on top \u2713\n- UFR corner: yellow on F (Red face)\n- UFL corner: yellow on L (Orange face... wait, L=Blue)\n\nLet me use",
+    "usage": {
+      "prompt_tokens": 977,
+      "completion_tokens": 512,
+      "total_tokens": 1489,
+      "cost": 0.017685,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.017685,
+        "upstream_inference_prompt_cost": 0.004885,
+        "upstream_inference_completions_cost": 0.0128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "R",
+      "G"
+    ],
+    "moves": "- UBR corner: yellow on top \u2713",
+    "pass": false,
+    "error": "Unknown move: -",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_02_oll_sune",
+    "task_file": "tasks/medium/task_02_oll_sune.json",
+    "difficulty": "medium",
+    "model": "gpt-5.4",
+    "model_id": "openai/gpt-5.4",
+    "raw_output": "(Y, G, R)\nR U R' U R U2 R'",
+    "usage": {
+      "prompt_tokens": 912,
+      "completion_tokens": 20,
+      "total_tokens": 932,
+      "cost": 0.00258,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.00258,
+        "upstream_inference_prompt_cost": 0.00228,
+        "upstream_inference_completions_cost": 0.0003
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "orientation": [
+      "Y",
+      "G",
+      "R"
+    ],
+    "moves": "R U R' U R U2 R'",
+    "pass": false,
+    "resulting_state": "U:\n  Y Y Y\n  Y Y Y\n  G Y B\nR:\n  O B B\n  G G G\n  G G G\nF:\n  Y R Y\n  R R R\n  R R R\nD:\n  W W W\n  W W W\n  W W W\nL:\n  G O O\n  B B B\n  B B B\nB:\n  R G R\n  O O O\n  O O O",
+    "status": "fail"
+  },
+  {
+    "task_id": "task_02_oll_sune",
+    "task_file": "tasks/medium/task_02_oll_sune.json",
+    "difficulty": "medium",
+    "model": "gemini-3.1-pro",
+    "model_id": "google/gemini-3.1-pro-preview",
+    "raw_output": "(Y, F, R)\nR U2 R' U' R U' R'",
+    "usage": {
+      "prompt_tokens": 939,
+      "completion_tokens": 508,
+      "total_tokens": 1447,
+      "cost": 0.007974,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.007974,
+        "upstream_inference_prompt_cost": 0.001878,
+        "upstream_inference_completions_cost": 0.006096
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 488,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    },
+    "error": "Verification exception: 'F'",
+    "orientation": [
+      "Y",
+      "F",
+      "R"
+    ],
+    "moves": "R U2 R' U' R U' R'",
+    "status": "fail"
+  }
+]

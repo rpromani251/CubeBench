@@ -1,6 +1,9 @@
 #!/bin/bash
 # Harbor verifier: checks if the model's move sequence achieves the goal state
 # Reads model output from /logs/agent/output.txt
+# Expected format:
+#   Line 1: orientation tuple, e.g. (Y, R, G)
+#   Line 2: space-separated moves, e.g. R U R' U'
 # Writes reward to /logs/verifier/reward.txt
 
 set -e
@@ -16,6 +19,6 @@ if [ ! -f "$AGENT_OUTPUT" ]; then
     exit 0
 fi
 
-MOVES=$(cat "$AGENT_OUTPUT" | tr -d '\n' | xargs)
+OUTPUT=$(cat "$AGENT_OUTPUT")
 
-python3 "$TASK_DIR/verify.py" --moves "$MOVES" --task-file "$TASK_DIR/tasks/current_task.json"
+python3 "$TASK_DIR/verify.py" --output "$OUTPUT" --task-file "$TASK_DIR/tasks/current_task.json"
