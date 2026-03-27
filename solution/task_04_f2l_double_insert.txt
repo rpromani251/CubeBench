@@ -1,0 +1,6 @@
+# Oracle trajectory — human solve by Robert Romani
+# Task: task_04_f2l_double_insert (two remaining F2L pairs)
+# Format: same as model output (orientation tuple + moves)
+
+(Y, R, G)
+R U' R' U' R U R2 U' R2 U' R'

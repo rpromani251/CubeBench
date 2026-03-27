@@ -1,0 +1,16 @@
+{
+  "id": "task_07_impossible_fake_oll",
+  "difficulty": "impossible",
+  "description": "You are holding the cube with yellow on top, orange in front, and blue on the right. The yellow face is fully complete except for the three front pieces. The UFL corner (the green-orange-yellow corner) has yellow facing the front face. The UF edge (the yellow-orange edge) has yellow facing the front face. The UFR corner (the yellow-orange-blue corner) has yellow facing the front face. All other pieces on the cube are correctly placed and oriented. Reorient these three pieces so that yellow faces up on all of them to solve the cube.",
+  "orientation": [
+    "Y",
+    "O",
+    "B"
+  ],
+  "initial_state": null,
+  "goal_state": null,
+  "oracle_solution": "INVALID",
+  "impossible": true,
+  "cfop_stage": "OLL",
+  "notes": "Impossible: 2 corners twisted the same way (sum \u2260 0 mod 3) and 1 edge flipped (sum \u2260 0 mod 2). Violates both parities."
+}

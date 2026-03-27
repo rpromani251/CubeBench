@@ -1,0 +1,16 @@
+{
+  "id": "task_08_impossible_edge_swap",
+  "difficulty": "impossible",
+  "description": "You are holding the cube with yellow on top, blue in front, and red on the right. The cube is fully solved except for two edges on the top layer. In the UF position, we have the yellow-green edge with yellow on top and green facing front. In the UB position, we have the yellow-blue edge with yellow on top and blue facing back. These two edges need to be swapped \u2014 the yellow-blue edge should be at UF and the yellow-green edge should be at UB. All other pieces are correctly placed. Swap these two edges to solve the cube.",
+  "orientation": [
+    "Y",
+    "B",
+    "R"
+  ],
+  "initial_state": null,
+  "goal_state": null,
+  "oracle_solution": "INVALID",
+  "impossible": true,
+  "cfop_stage": "PLL",
+  "notes": "Impossible: a single 2-edge swap is an odd permutation, but corners are identity (even). Permutation parity mismatch."
+}

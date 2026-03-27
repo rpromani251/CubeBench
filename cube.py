@@ -323,12 +323,21 @@ class Cube:
 
         # Handle wide moves
         if base in wide_moves:
-            for sub_move in wide_moves[base]:
-                if modifier == "prime":
-                    self.apply_move(sub_move + "'")
-                elif modifier == "double":
-                    self.apply_move(sub_move + "2")
-                else:
+            if modifier == "prime":
+                # Invert: reverse order, invert each sub_move
+                for sub_move in reversed(wide_moves[base]):
+                    if sub_move.endswith("'"):
+                        self.apply_move(sub_move[:-1])
+                    else:
+                        self.apply_move(sub_move + "'")
+            elif modifier == "double":
+                # Do the whole wide move twice
+                for sub_move in wide_moves[base]:
+                    self.apply_move(sub_move)
+                for sub_move in wide_moves[base]:
+                    self.apply_move(sub_move)
+            else:
+                for sub_move in wide_moves[base]:
                     self.apply_move(sub_move)
             return
 

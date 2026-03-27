@@ -1,0 +1,16 @@
+{
+  "id": "task_09_impossible_orientation",
+  "difficulty": "impossible",
+  "description": "You are holding the cube with yellow on top, white in front, and green on the right. All six faces are fully solved \u2014 each face is a single uniform color. Solve the cube.",
+  "orientation": [
+    "Y",
+    "W",
+    "G"
+  ],
+  "initial_state": null,
+  "goal_state": null,
+  "oracle_solution": "INVALID",
+  "impossible": true,
+  "cfop_stage": "n/a",
+  "notes": "Impossible: yellow (U) and white (D) are opposite faces \u2014 they cannot be top and front simultaneously on any valid cube orientation."
+}

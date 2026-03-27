@@ -1,0 +1,16 @@
+{
+  "id": "task_06_impossible_twisted_corner",
+  "difficulty": "impossible",
+  "description": "You are holding the cube with yellow on top, green in front, and orange on the right. The entire cube is solved except for one corner. The URF corner \u2014 the yellow-green-orange corner \u2014 has yellow showing on the front face instead of on top. All other pieces are in their correct positions and orientations. Reorient this corner so that yellow faces up to solve the cube.",
+  "orientation": [
+    "Y",
+    "G",
+    "O"
+  ],
+  "initial_state": null,
+  "goal_state": null,
+  "oracle_solution": "INVALID",
+  "impossible": true,
+  "cfop_stage": "n/a",
+  "notes": "Impossible: single twisted corner violates corner orientation parity (sum of corner twists must be 0 mod 3)."
+}

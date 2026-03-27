@@ -2,8 +2,8 @@ version = "1.0"
 source = "original"
 
 [metadata]
-author_name = "Rishi Promani"
-author_email = ""
+author_name = "Robert Romani"
+author_email = "rpromani@mit.edu"
 difficulty_explanation = "Requires reconstructing 3D cube state from natural language cubing terminology (CFOP substeps), then generating a valid move sequence. Tests spatial state tracking and domain-specific reasoning."
 category = "spatial-reasoning"
 tags = ["rubiks-cube", "spatial-reasoning", "state-tracking", "CFOP", "planning"]
